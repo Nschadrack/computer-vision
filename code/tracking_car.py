@@ -45,7 +45,7 @@ def track_car(model, frame, tracker, class_id):
 
 
 
-def process_video(video_source, model, class_names, class_id, output_path=None):
+def process_video(video_source, model, class_names, class_id, tracking_line_coord=None, tracking_region=-20, output_path=None):
     """
     Function for processing the video
     params:
@@ -75,8 +75,16 @@ def process_video(video_source, model, class_names, class_id, output_path=None):
         # perform object tracking
         results, tracks = track_car(model, frame, tracker, class_id)
         frame_height, frame_width = frame.shape[:2]
-        coord = (0, (frame_height//2) - 40, frame_width, frame_height//2)
-        cv2.line(frame, (coord[0], coord[1]-20), (coord[2], coord[3]-20), (0, 0, 255), thickness=3)
+
+        if tracking_line_coord is not None:
+            coord = (0 + tracking_line_coord[0], 
+                     (frame_height // 2) + tracking_line_coord[1], 
+                     frame_width + tracking_line_coord[2], 
+                     (frame_height // 2) + tracking_line_coord[3])
+        else:
+            coord = (0, (frame_height//2), frame_width, frame_height//2)
+
+        cv2.line(frame, (coord[0], coord[1] + tracking_region), (coord[2], coord[3] + tracking_region), (0, 0, 255), thickness=3)
 
         # # Filter results to focus on required class name
         # if len(results) > 0:
