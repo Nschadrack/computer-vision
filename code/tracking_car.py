@@ -75,7 +75,7 @@ def process_video(video_source, model, class_names, class_id, output_path=None):
         # perform object tracking
         results, tracks = track_car(model, frame, tracker, class_id)
         frame_height, frame_width = frame.shape[:2]
-        coord = (0, frame_height//2, frame_width, frame_height//2)
+        coord = (0, (frame_height//2) - 40, frame_width, frame_height//2)
         cv2.line(frame, (coord[0], coord[1]-20), (coord[2], coord[3]-20), (0, 0, 255), thickness=3)
 
         # # Filter results to focus on required class name
