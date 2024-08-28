@@ -1,0 +1,1 @@
+python object_tracking.py --source "D:\\PERSONAL\\AI\\objectTracking\\videos\\los_angeles.mp4" --hlefttop -150 --hrighttop -150 --hleftbottom 180 --hrightbottom 180 --lposition 330 --rposition 88
